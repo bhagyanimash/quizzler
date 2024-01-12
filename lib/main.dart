@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizeBrain quizeBrain = QuizeBrain();
 
@@ -40,20 +41,27 @@ class _QuizePageState extends State<QuizePage> {
   void checkAnswer(bool userPickedAnswer) {
     bool correctAnswer = quizeBrain.getCorrectAnswer();
     setState(() {
-      if (userPickedAnswer == correctAnswer) {
-        scoreKeeper.add(
-          const Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
+      if (quizeBrain.isFinished() == true) {
+        Alert(context: context, title: 'Finished', desc: 'End of the quize')
+            .show();
+        quizeBrain.reset();
+        scoreKeeper = [];
       } else {
-        scoreKeeper.add(
-          const Icon(
-            Icons.close,
-            color: Colors.redAccent,
-          ),
-        );
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(
+            const Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          scoreKeeper.add(
+            const Icon(
+              Icons.close,
+              color: Colors.redAccent,
+            ),
+          );
+        }
       }
 
       quizeBrain.nextQuestion();
@@ -65,12 +73,12 @@ class _QuizePageState extends State<QuizePage> {
     var children2 = [
       Expanded(
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Center(
             child: Text(
               quizeBrain.getQuestionText(),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 25, color: Colors.white),
+              style: const TextStyle(fontSize: 25, color: Colors.white),
             ),
           ),
         ),
