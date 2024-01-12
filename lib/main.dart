@@ -37,6 +37,29 @@ class QuizePage extends StatefulWidget {
 class _QuizePageState extends State<QuizePage> {
   List<Icon> scoreKeeper = [];
 
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizeBrain.getCorrectAnswer();
+    setState(() {
+      if (userPickedAnswer == correctAnswer) {
+        scoreKeeper.add(
+          const Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        scoreKeeper.add(
+          const Icon(
+            Icons.close,
+            color: Colors.redAccent,
+          ),
+        );
+      }
+
+      quizeBrain.nextQuestion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var children2 = [
@@ -60,15 +83,7 @@ class _QuizePageState extends State<QuizePage> {
             fixedSize: const Size(300, 80),
           ),
           onPressed: () {
-            bool correctAnswer = quizeBrain.getCorrectAnswer();
-            if (correctAnswer == true) {
-              print('correct');
-            } else {
-              print('wrong');
-            }
-            setState(() {
-              quizeBrain.nextQuestion();
-            });
+            checkAnswer(true);
           },
           child: const Text(
             'True',
@@ -87,15 +102,7 @@ class _QuizePageState extends State<QuizePage> {
             fixedSize: const Size(300, 80),
           ),
           onPressed: () {
-            bool correctAnswer = quizeBrain.getCorrectAnswer();
-            if (correctAnswer == false) {
-              print('correct');
-            } else {
-              print('wrong');
-            }
-            setState(() {
-              quizeBrain.nextQuestion();
-            });
+            checkAnswer(false);
           },
           child: const Text(
             'False',
