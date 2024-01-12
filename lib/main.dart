@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
 
 QuizeBrain quizeBrain = QuizeBrain();
-
+//quiz app
 void main() {
   runApp(const MainApp());
 }
