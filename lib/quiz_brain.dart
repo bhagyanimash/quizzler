@@ -1,7 +1,9 @@
 import 'question.dart';
 
+int _questionNumber = 0;
+
 class QuizeBrain {
-  List<Question> questionBank = [
+  List<Question> _questionBank = [
     Question(
         questionText: 'You can lead to cow down stairs but not up stairs.',
         questionAnswer: false),
@@ -44,7 +46,18 @@ class QuizeBrain {
             'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         questionAnswer: true),
   ];
-  String getQuestionText(int questionNumber) {
-    return questionBank[questionNumber].questionText;
+
+  void nextQuestion() {
+    if (_questionNumber < _questionBank.length - 1) {
+      _questionNumber++;
+    }
+  }
+
+  String getQuestionText() {
+    return _questionBank[_questionNumber].questionText;
+  }
+
+  bool getCorrectAnswer() {
+    return _questionBank[_questionNumber].questionAnswer;
   }
 }

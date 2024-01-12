@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
 
 QuizeBrain quizeBrain = QuizeBrain();
-//quiz app
+
 void main() {
   runApp(const MainApp());
 }
@@ -37,8 +37,6 @@ class QuizePage extends StatefulWidget {
 class _QuizePageState extends State<QuizePage> {
   List<Icon> scoreKeeper = [];
 
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     var children2 = [
@@ -47,7 +45,7 @@ class _QuizePageState extends State<QuizePage> {
           padding: EdgeInsets.all(10),
           child: Center(
             child: Text(
-              quizeBrain.questionBank[questionNumber].questionText,
+              quizeBrain.getQuestionText(),
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25, color: Colors.white),
             ),
@@ -62,17 +60,15 @@ class _QuizePageState extends State<QuizePage> {
             fixedSize: const Size(300, 80),
           ),
           onPressed: () {
-            bool correctAnswer =
-                quizeBrain.questionBank[questionNumber].questionAnswer;
+            bool correctAnswer = quizeBrain.getCorrectAnswer();
             if (correctAnswer == true) {
               print('correct');
             } else {
               print('wrong');
             }
             setState(() {
-              questionNumber++;
+              quizeBrain.nextQuestion();
             });
-            print(questionNumber);
           },
           child: const Text(
             'True',
@@ -91,18 +87,15 @@ class _QuizePageState extends State<QuizePage> {
             fixedSize: const Size(300, 80),
           ),
           onPressed: () {
-            quizeBrain.questionBank[questionNumber].questionAnswer = true;
-            bool correctAnswer =
-                quizeBrain.questionBank[questionNumber].questionAnswer;
+            bool correctAnswer = quizeBrain.getCorrectAnswer();
             if (correctAnswer == false) {
               print('correct');
             } else {
               print('wrong');
             }
             setState(() {
-              questionNumber++;
+              quizeBrain.nextQuestion();
             });
-            print(questionNumber);
           },
           child: const Text(
             'False',
